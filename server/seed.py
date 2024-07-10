@@ -26,3 +26,25 @@ def seed_phase_1():
 
     db.session.add_all([pat1, pat2, pat3])
     db.session.commit()
+
+def seed_phase_2():
+    # Create Appointments
+    app1 = Appointment(doctor_name="Dr. John Mwangi", patient_name="Alice Njeri", appointment_date=datetime(2023, 7, 10, 10, 0))
+    app2 = Appointment(doctor_name="Dr. Mary Wanjiru", patient_name="Michael Kiprono", appointment_date=datetime(2023, 7, 11, 11, 0))
+    app3 = Appointment(doctor_name="Dr. Peter Otieno", patient_name="Grace Achieng", appointment_date=datetime(2023, 7, 12, 9, 0))
+
+    db.session.add_all([app1, app2, app3])
+    db.session.commit()
+    app2 = Appointment(doctor_name="Dr. Mary Wanjiru", patient_name="Michael Kiprono", appointment_date=datetime(2023, 7, 11, 11, 0))
+    app3 = Appointment(doctor_name="Dr. Peter Otieno", patient_name="Grace Achieng", appointment_date=datetime(2023, 7, 12, 9, 0))
+
+    db.session.add_all([app1, app2, app3])
+    db.session.commit()
+
+    # Create Medications
+    med1 = Medication(name="Aspirin", dosage="100mg")
+    med2 = Medication(name="Ibuprofen", dosage="200mg")
+    med3 = Medication(name="Paracetamol", dosage="500mg")
+
+    db.session.add_all([med1, med2, med3])
+    db.session.commit()
