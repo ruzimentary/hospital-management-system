@@ -85,4 +85,56 @@ def handle_appointment(id):
         db.session.commit()
         return jsonify({'message': 'Appointment deleted successfully'}), 200
 
+@app.route('/departments', methods=['POST'])
+def add_department():
+    data = request.get_json()
+    if not data.get('name'):
+        return jsonify({"error": "Name is required"}), 400
+    department = Department(name=data['name'])
+    db.session.add(department)
+    db.session.commit()
+    return jsonify({"id": department.id}), 201
 
+@app.route('/departments/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+def handle_department(id):
+    department = Department.query.get_or_404(id)
+    if request.method == 'GET':
+        return jsonify(department.to_dict())
+    elif request.method == 'PUT':
+        data = request.get_json()
+        department.name = data.get('name', department.name)
+        db.session.commit()
+        return jsonify({'message': 'Department updated successfully'}), 200
+    elif request.method == 'DELETE':
+        db.session.delete(department)
+        db.session.commit()
+        return jsonify({'message': 'Department deleted successfully'}), 200
+
+@app.route('/medications', methods=['POST'])
+def add_medication():
+    data = request.get_json()
+    if not data.get('name') or not data.get('dosage'):
+        return jsonify({"error": "Name and dosage are required"}), 400
+    medication = Medication(name=data['name'], dosage=data['dosage'])
+    db.session.add(medication)
+    db.session.commit()
+    return jsonify({"id": medication.id}), 201
+
+@app.route('/medications/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+def handle_medication(id):
+    medication = Medication.query.get_or_404(id)
+    if request.method == 'GET':
+        return jsonify(medication.to_dict())
+    elif request.method == 'PUT':
+        data = request.get_json()
+        medication.name = data.get('name', medication.name)
+        medication.dosage = data.get('dosage', medication.dosage)
+        db.session.commit()
+        return jsonify({'message': 'Medication updated successfully'}), 200
+    elif request.method == 'DELETE':
+        db.session.delete(medication)
+        db.session.commit()
+        return jsonify({'message': 'Medication deleted successfully'}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
