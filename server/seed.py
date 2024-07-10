@@ -48,3 +48,19 @@ def seed_phase_2():
 
     db.session.add_all([med1, med2, med3])
     db.session.commit()
+
+def seed_phase_3():
+    # Create Medical Records
+    mr1 = MedicalRecord(patient_id=1, medication_id=1, diagnosis="Hypertension")
+    mr2 = MedicalRecord(patient_id=2, medication_id=2, diagnosis="Migraine")
+    mr3 = MedicalRecord(patient_id=3, medication_id=3, diagnosis="Flu")
+
+    db.session.add_all([mr1, mr2, mr3])
+    db.session.commit()
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+        seed_phase_1()
+        seed_phase_2()
+        seed_phase_3()
